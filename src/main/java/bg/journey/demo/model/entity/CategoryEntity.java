@@ -14,7 +14,7 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "categories")
-public class CategoryEntity {
+public class CategoryEntity extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private CategoryType name;
 
