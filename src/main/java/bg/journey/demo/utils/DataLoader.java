@@ -11,13 +11,14 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
 @AllArgsConstructor
 @Component
-//@ConditionalOnProperty("app.dataLoader")
+@ConditionalOnProperty("app.dataLoader")
 public class DataLoader implements ApplicationRunner {
     private final UserRepository userRepository;
 

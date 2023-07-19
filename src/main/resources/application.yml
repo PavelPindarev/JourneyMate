@@ -1,4 +1,15 @@
+app:
+  jwtSecret: "6jCTFSacGgVfffoK/c/DQg4z0848R9a71acEiKgjozs="
+  jwtExpirationMs: 600000
+  dataLoader: true
+
+server:
+  port: 8080
+
 spring:
+  data:
+    rest:
+      base-path: /api
   datasource:
     driverClassName: org.postgresql.Driver
     password: "password"
