@@ -1,10 +1,7 @@
 package bg.journey.demo.model.entity;
 
 import bg.journey.demo.model.enums.ReactionEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -19,5 +16,7 @@ public class ReactionEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ReactionEnum reactionType;
 
-    //user, routes, comments
+    @ManyToOne(optional = false)
+    private UserEntity author;
+    //routes, comments
 }

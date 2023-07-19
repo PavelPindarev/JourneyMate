@@ -1,11 +1,11 @@
 package bg.journey.demo.model.entity;
 
 import bg.journey.demo.model.enums.LevelEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,16 +16,30 @@ import lombok.*;
 @Table(name = "routes")
 public class RouteEntity extends BaseEntity {
 
+    @NotBlank
     private String name;
 
+    @Column(columnDefinition = "LONGTEXT", nullable = false)
     private String gpxCoordinates;
 
     @Enumerated(EnumType.STRING)
     private LevelEnum levelType;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private String videoUrl;
 
-    //pictures and categories
+    @OneToMany
+    private Set<PictureEntity> pictures;
+
+    @ManyToMany
+    private Set<CategoryEntity> categories;
+
+    @ManyToOne(optional = false)
+    private UserEntity author;
+
+    @OneToMany
+    private Set<ReactionEntity> reactions;
+
 }
