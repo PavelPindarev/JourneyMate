@@ -3,6 +3,7 @@ package bg.journey.demo.model.entity;
 import bg.journey.demo.model.enums.LevelEnum;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Set;
@@ -22,7 +23,8 @@ public class RouteEntity extends BaseEntity {
     @Column(columnDefinition = "LONGTEXT", nullable = false)
     private String gpxCoordinates;
 
-    @Enumerated(EnumType.STRING)
+    @NotNull
+   @Enumerated(EnumType.STRING)
     private LevelEnum levelType;
 
     @Column(columnDefinition = "TEXT")

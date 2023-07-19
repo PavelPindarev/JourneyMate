@@ -1,10 +1,8 @@
 package bg.journey.demo.model.entity;
 
 import bg.journey.demo.model.enums.CategoryType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -14,9 +12,11 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "categories")
-public class CategoryEntity extends BaseEntity{
+public class CategoryEntity extends BaseEntity {
+    @NotNull
     @Enumerated(EnumType.STRING)
     private CategoryType name;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 }
