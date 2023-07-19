@@ -20,11 +20,11 @@ public class RouteEntity extends BaseEntity {
     @NotBlank
     private String name;
 
-    @Column(columnDefinition = "LONGTEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String gpxCoordinates;
 
     @NotNull
-   @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private LevelEnum levelType;
 
     @Column(columnDefinition = "TEXT")
@@ -32,7 +32,7 @@ public class RouteEntity extends BaseEntity {
 
     private String videoUrl;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PictureEntity> pictures;
 
     @ManyToMany
@@ -41,7 +41,7 @@ public class RouteEntity extends BaseEntity {
     @ManyToOne(optional = false)
     private UserEntity author;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ReactionEntity> reactions;
 
 }
