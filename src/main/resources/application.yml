@@ -1,5 +1,5 @@
 app:
-  jwtSecret: "6jCTFSacGgVfffoK/c/DQg4z0848R9a71acEiKgjozs="
+  jwtSecret: "jwt_secret"
   jwtExpirationMs: 600000
   dataLoader: true
 
