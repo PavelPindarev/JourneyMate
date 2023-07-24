@@ -12,7 +12,6 @@ import org.springframework.security.authentication.LockedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.security.auth.login.AccountException;
 import javax.security.auth.login.AccountExpiredException;
 
 @RestControllerAdvice
@@ -45,7 +44,6 @@ public class GlobalExceptionHandler {
                 );
     }
 
-    //for @PreAuthorize later
     @ExceptionHandler({AccessDeniedException.class})
     public ResponseEntity<Object> handleAccessDenied(Exception exception) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)

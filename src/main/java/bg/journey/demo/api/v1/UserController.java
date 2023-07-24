@@ -11,6 +11,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -59,7 +60,7 @@ public class UserController {
 
     }
 
-    //TODO: @PreAuthorize
+
     @PatchMapping("/my-profile")
     public ResponseEntity<ResponseDTO<Object>> updateMyProfile(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                                                @Valid @RequestBody UpdateUserProfileDTO updateUserProfileDTO,
@@ -92,8 +93,7 @@ public class UserController {
                 );
     }
 
-
-    @PostMapping(value = "/profile-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/profile-picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseDTO<Object>> setUserProfileImage(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                                                    @RequestParam(required = false) String title,
                                                                    @RequestPart MultipartFile file) {
@@ -115,5 +115,43 @@ public class UserController {
 
                 );
     }
+
+    @DeleteMapping(value = "/profile-picture")
+    public ResponseEntity<ResponseDTO<Object>> deleteUserProfileImage(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        userService.deleteProfileImage(userPrincipal);
+
+        return ResponseEntity
+                .ok(
+                        ResponseDTO
+                                .builder()
+                                .status(HttpStatus.OK.value())
+                                .content(null)
+                                .message("Profile Picture deleted successfully!")
+                                .build()
+
+                );
+    }
+
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/user/{userId}/ban")
+    public ResponseEntity<ResponseDTO<Object>> banUserFromApp(
+            @PathVariable Long userId,
+            @AuthenticationPrincipal UserPrincipal principal
+    ) {
+
+        userService.banUserFromApp(principal, userId);
+
+        return ResponseEntity
+                .ok(
+                        ResponseDTO
+                                .builder()
+                                .content(null)
+                                .status(HttpStatus.OK.value())
+                                .message("User banned from the app successfully!")
+                                .build()
+                );
+    }
+//DELETE profile maybe later
 
 }
