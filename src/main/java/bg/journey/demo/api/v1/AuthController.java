@@ -80,7 +80,6 @@ public class AuthController {
                     );
         }
 
-
         authService.signUpUser(signupDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

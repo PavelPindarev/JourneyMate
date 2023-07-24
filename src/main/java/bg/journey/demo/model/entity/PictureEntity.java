@@ -13,10 +13,10 @@ import lombok.*;
 @Entity
 @Table(name = "pictures")
 public class PictureEntity extends BaseEntity {
-
     @NotBlank
     private String title;
-
+    @NotBlank
+    private String publicId;
     @NotBlank
     private String url;
 
