@@ -1,9 +1,11 @@
 package bg.journey.demo.service;
 
+import bg.journey.demo.dto.payload.PictureUploadPayloadDTO;
 import bg.journey.demo.dto.payload.UpdateUserProfileDTO;
 import bg.journey.demo.dto.response.UserProfileDTO;
 import bg.journey.demo.exception.NotAuthorizedException;
 import bg.journey.demo.exception.ResourceNotFoundException;
+import bg.journey.demo.model.entity.PictureEntity;
 import bg.journey.demo.model.entity.UserEntity;
 import bg.journey.demo.repository.UserRepository;
 import bg.journey.demo.security.UserPrincipal;
@@ -11,17 +13,20 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import static bg.journey.demo.config.AppConstants.DEFAULT_USER_PICTURE_CLOUDINARY_FOLDER;
+
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper mapper;
+    private final CloudinaryService cloudinaryService;
 
-    public UserService(UserRepository userRepository, ModelMapper mapper) {
+    public UserService(UserRepository userRepository, ModelMapper mapper, CloudinaryService cloudinaryService) {
         this.userRepository = userRepository;
         this.mapper = mapper;
+        this.cloudinaryService = cloudinaryService;
     }
-
 
 
     public UserProfileDTO getMyProfile(UserPrincipal userPrincipal) {
@@ -52,6 +57,24 @@ public class UserService {
         userEntity.setFirstName(updateUserProfileDTO.getFirstName());
         userEntity.setLastName(updateUserProfileDTO.getLastName());
         userRepository.save(userEntity);
+    }
+
+    public void setProfilePicture(UserPrincipal userPrincipal, PictureUploadPayloadDTO pictureDTO) {
+        UserEntity userEntity = userRepository.findByUsernameOrEmail(userPrincipal.getUsername(),
+                userPrincipal.getUsername()).orElseThrow(NotAuthorizedException::new);
+
+        //first upload the new image
+        PictureEntity pictureEntity = cloudinaryService.upload(pictureDTO,
+                DEFAULT_USER_PICTURE_CLOUDINARY_FOLDER);
+
+        //if the new image is uploaded
+        if (pictureEntity != null && userEntity.getProfilePicture() != null){
+            //delete the old image
+            cloudinaryService.delete(userEntity.getProfilePicture());
+        }
+
+        //set the new profile image
+        userEntity.setProfilePicture(pictureEntity);
     }
 
     // UserProfileDTO getUserProfile(Long userId);

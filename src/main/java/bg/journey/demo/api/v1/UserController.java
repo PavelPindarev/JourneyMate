@@ -1,5 +1,6 @@
 package bg.journey.demo.api.v1;
 
+import bg.journey.demo.dto.payload.PictureUploadPayloadDTO;
 import bg.journey.demo.dto.payload.UpdateUserProfileDTO;
 import bg.journey.demo.dto.response.ResponseDTO;
 import bg.journey.demo.dto.response.UserProfileDTO;
@@ -8,10 +9,12 @@ import bg.journey.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,6 +41,22 @@ public class UserController {
                         .message("Successfully get your profile info!")
                         .build()
         );
+    }
+
+    @GetMapping(value = "/user-profile/{userId}")
+    public ResponseEntity<ResponseDTO<UserProfileDTO>> getUserProfile(@PathVariable(value = "userId") Long userId) {
+        UserProfileDTO userProfileDTO = userService.getUserProfile(userId);
+
+        return ResponseEntity
+                .ok(
+                        ResponseDTO
+                                .<UserProfileDTO>builder()
+                                .content(userProfileDTO)
+                                .status(HttpStatus.OK.value())
+                                .message("Successfully get user's profile info!")
+                                .build()
+                );
+
     }
 
     //TODO: @PreAuthorize
@@ -73,19 +92,28 @@ public class UserController {
                 );
     }
 
-    @GetMapping(value = "/user-profile/{userId}")
-    public ResponseEntity<ResponseDTO<UserProfileDTO>> getUserProfile(@PathVariable(value = "userId") Long userId) {
-        UserProfileDTO userProfileDTO = userService.getUserProfile(userId);
+
+    @PostMapping(value = "/profile-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseDTO<Object>> setUserProfileImage(@AuthenticationPrincipal UserPrincipal userPrincipal,
+                                                                   @RequestParam(required = false) String title,
+                                                                   @RequestPart MultipartFile file) {
+        userService.setProfilePicture(userPrincipal, PictureUploadPayloadDTO
+                .builder()
+                .multipartFile(file)
+                .title(title)
+                .build()
+        );
 
         return ResponseEntity
                 .ok(
                         ResponseDTO
-                                .<UserProfileDTO>builder()
-                                .content(userProfileDTO)
+                                .builder()
                                 .status(HttpStatus.OK.value())
-                                .message("Successfully get user's profile info!")
+                                .content(null)
+                                .message("Profile Picture set successfully!")
                                 .build()
-                );
 
+                );
     }
+
 }
