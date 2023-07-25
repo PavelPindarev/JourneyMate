@@ -1,6 +1,7 @@
 package bg.journey.demo.model.entity;
 
 import bg.journey.demo.model.enums.ReactionEnum;
+import bg.journey.demo.model.enums.ReactionTargetType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,5 +19,7 @@ public class ReactionEntity extends BaseEntity {
 
     @ManyToOne(optional = false)
     private UserEntity author;
-    //routes, comments
+
+    @Enumerated(EnumType.STRING)
+    private ReactionTargetType reactionTargetType;
 }
