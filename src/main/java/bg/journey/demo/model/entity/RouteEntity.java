@@ -32,7 +32,10 @@ public class RouteEntity extends BaseEntity {
 
     private String videoUrl;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
+    private PictureEntity mainPicture;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<PictureEntity> pictures;
 
     @ManyToMany

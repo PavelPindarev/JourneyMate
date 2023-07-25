@@ -20,6 +20,8 @@ public class ReactionEntity extends BaseEntity {
     @ManyToOne(optional = false)
     private UserEntity author;
 
+    private Long targetEntityId;
+
     @Enumerated(EnumType.STRING)
     private ReactionTargetType reactionTargetType;
 }
