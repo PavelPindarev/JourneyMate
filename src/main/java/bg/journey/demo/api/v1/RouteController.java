@@ -1,6 +1,8 @@
 package bg.journey.demo.api.v1;
 
+import bg.journey.demo.dto.payload.PictureUploadPayloadDTO;
 import bg.journey.demo.dto.payload.RouteCreateDTO;
+import bg.journey.demo.dto.response.CategoryDTO;
 import bg.journey.demo.dto.response.ResponseDTO;
 import bg.journey.demo.dto.response.RouteDetailsViewDTO;
 import bg.journey.demo.dto.response.RouteViewDTO;
@@ -9,12 +11,16 @@ import bg.journey.demo.service.RouteService;
 import jakarta.validation.Valid;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 import static bg.journey.demo.config.AppConstants.API_BASE;
 
@@ -87,6 +93,109 @@ public class RouteController {
                                 .build()
                 );
     }
-    //TODO:get categories; set pictures; set main picture; delete; route; react !!!
+
+    @GetMapping("/categories")
+    public ResponseEntity<ResponseDTO<Set<CategoryDTO>>> getAllCategories() {
+        Set<CategoryDTO> allCategories = routeService.getAllCategories();
+
+        return ResponseEntity.ok(
+                ResponseDTO
+                        .<Set<CategoryDTO>>builder()
+                        .status(HttpStatus.OK.value())
+                        .content(allCategories)
+                        .message("Successfully returned all categories!")
+                        .build()
+        );
+    }
+
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR @securityExpressionUtility.isRouteOwner(#routeId, principal)")
+    @PostMapping(value = "/{routeId}/main-picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseDTO<Object>> setRouteMainPicture(@PathVariable(value = "routeId") Long routeId,
+                                                                   @AuthenticationPrincipal UserPrincipal userPrincipal,
+                                                                   @RequestParam(required = false) String title,
+                                                                   @RequestPart MultipartFile file) {
+        routeService.setMainPicture(routeId, PictureUploadPayloadDTO
+                .builder()
+                .multipartFile(file)
+                .title(title)
+                .build()
+        );
+
+        return ResponseEntity
+                .ok(
+                        ResponseDTO
+                                .builder()
+                                .status(HttpStatus.OK.value())
+                                .content(null)
+                                .message("Route main picture set successfully!")
+                                .build()
+
+                );
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR @securityExpressionUtility.isRouteOwner(#routeId, principal)")
+    @PostMapping(value = "/{routeId}/pictures", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseDTO<Object>> addRoutePicture(@PathVariable(value = "routeId") Long routeId,
+                                                               @AuthenticationPrincipal UserPrincipal userPrincipal,
+                                                               @RequestParam(required = false) String title,
+                                                               @RequestPart MultipartFile file) {
+        routeService.addPicture(routeId, PictureUploadPayloadDTO
+                .builder()
+                .multipartFile(file)
+                .title(title)
+                .build()
+        );
+
+        return ResponseEntity
+                .ok(
+                        ResponseDTO
+                                .builder()
+                                .status(HttpStatus.OK.value())
+                                .content(null)
+                                .message("Route pictures added successfully!")
+                                .build()
+
+                );
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR @securityExpressionUtility.isRouteOwner(#routeId, principal)")
+    @DeleteMapping(value = "/{routeId}/main-picture")
+    public ResponseEntity<ResponseDTO<Object>> deleteRouteMainPicture(@PathVariable(value = "routeId") Long routeId,
+                                                                      @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        routeService.deleteMainPicture(routeId);
+
+        return ResponseEntity
+                .ok(
+                        ResponseDTO
+                                .builder()
+                                .status(HttpStatus.OK.value())
+                                .content(null)
+                                .message("Route main picture deleted successfully!")
+                                .build()
+
+                );
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR @securityExpressionUtility.isRouteOwner(#routeId, principal)")
+    @DeleteMapping(value = "/{routeId}/pictures/{pictureId}")
+    public ResponseEntity<ResponseDTO<Object>> deleteAPicture(@PathVariable(value = "routeId") Long routeId,
+                                                              @PathVariable(value = "pictureId") Long pictureId,
+                                                              @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        routeService.deleteAPicture(routeId, pictureId);
+
+        return ResponseEntity
+                .ok(
+                        ResponseDTO
+                                .builder()
+                                .status(HttpStatus.OK.value())
+                                .content(null)
+                                .message("Route picture deleted successfully!")
+                                .build()
+
+                );
+    }
+
+    //TODO:   delete; route; react !!!
 
 }

@@ -94,7 +94,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/profile-picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ResponseDTO<Object>> setUserProfileImage(@AuthenticationPrincipal UserPrincipal userPrincipal,
+    public ResponseEntity<ResponseDTO<Object>> setUserProfilePicture(@AuthenticationPrincipal UserPrincipal userPrincipal,
                                                                    @RequestParam(required = false) String title,
                                                                    @RequestPart MultipartFile file) {
         userService.setProfilePicture(userPrincipal, PictureUploadPayloadDTO
@@ -117,7 +117,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/profile-picture")
-    public ResponseEntity<ResponseDTO<Object>> deleteUserProfileImage(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+    public ResponseEntity<ResponseDTO<Object>> deleteUserProfilePicture(@AuthenticationPrincipal UserPrincipal userPrincipal) {
         userService.deleteProfileImage(userPrincipal);
 
         return ResponseEntity

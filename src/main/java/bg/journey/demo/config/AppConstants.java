@@ -17,5 +17,10 @@ public final class AppConstants {
             "http://127.0.0.1:80"
     );
 
-    public static final String DEFAULT_USER_PICTURE_CLOUDINARY_FOLDER = PROJECT_NAME + "/users/profile-images";
+    public static final String DEFAULT_USER_PICTURE_CLOUDINARY_FOLDER = PROJECT_NAME + "/users/profile-pictures";
+
+    public static final String DEFAULT_ROUTE_PICTURE_CLOUDINARY_FOLDER = PROJECT_NAME + "/routes/main-pictures";
+
+    public static final String DEFAULT_ROUTE_PICTURES_CLOUDINARY_FOLDER = PROJECT_NAME + "/routes/pictures";
+
 }

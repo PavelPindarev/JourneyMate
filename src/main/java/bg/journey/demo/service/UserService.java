@@ -84,8 +84,11 @@ public class UserService {
         UserEntity userEntity = userRepository.findByUsernameOrEmail(userPrincipal.getUsername(),
                 userPrincipal.getUsername()).orElseThrow(NotAuthorizedException::new);
 
+
         PictureEntity profilePicture = userEntity.getProfilePicture();
         userEntity.setProfilePicture(null);
+        this.userRepository.save(userEntity);
+
         cloudinaryService.delete(profilePicture);
     }
 

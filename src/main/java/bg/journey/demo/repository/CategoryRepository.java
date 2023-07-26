@@ -12,4 +12,5 @@ import java.util.Set;
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
 
     Set<CategoryEntity> findAllByRoutes(RouteEntity e);
+
 }
