@@ -99,10 +99,4 @@ public class UserService {
         userForBan.setEnabled(false);
     }
 
-    public boolean isOwner(String userName, Long id) {
-        UserEntity userEntity = userRepository.findByUsernameOrEmail(userName,
-                userName).orElseThrow(NotAuthorizedException::new);
-
-        return userEntity.getId().equals(id);
-    }
 }

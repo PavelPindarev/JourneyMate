@@ -195,7 +195,22 @@ public class RouteController {
 
                 );
     }
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR @securityExpressionUtility.isRouteOwner(#routeId, principal)")
+    @DeleteMapping(value = "/{routeId}")
+    public ResponseEntity<ResponseDTO<Object>> deleteARoute(@PathVariable(value = "routeId") Long routeId,
+                                                            @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        routeService.deleteARoute(routeId);
 
-    //TODO:   delete; route; react !!!
+        return ResponseEntity
+                .ok(
+                        ResponseDTO
+                                .builder()
+                                .status(HttpStatus.OK.value())
+                                .content(null)
+                                .message("Route deleted successfully!")
+                                .build()
+
+                );
+    }
 
 }

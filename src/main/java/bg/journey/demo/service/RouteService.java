@@ -217,4 +217,24 @@ public class RouteService {
 
         cloudinaryService.delete(pictureEntity);
     }
+
+    @Transactional
+    public void deleteARoute(Long routeId) {
+        RouteEntity routeEntity = routeRepository.findById(routeId)
+                .orElseThrow(RouteNotFoundException::new);
+
+        PictureEntity mainPicture = routeEntity.getMainPicture();
+        routeEntity.setMainPicture(null);
+        routeEntity.setAuthor(null);
+        routeEntity.setCategories(null);
+        Set<PictureEntity> pictures = routeEntity.getPictures();
+        routeEntity.setPictures(null);
+        routeEntity.setReactions(null);
+
+        cloudinaryService.delete(mainPicture);
+
+        pictures.forEach(cloudinaryService::delete);
+
+        this.routeRepository.delete(routeEntity);
+    }
 }
