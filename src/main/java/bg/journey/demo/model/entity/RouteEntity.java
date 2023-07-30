@@ -47,4 +47,6 @@ public class RouteEntity extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ReactionEntity> reactions;
 
+
+
 }
