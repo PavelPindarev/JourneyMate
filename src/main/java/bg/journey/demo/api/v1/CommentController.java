@@ -44,6 +44,7 @@ public class CommentController {
     @GetMapping("/{commentId}")
     public ResponseEntity<ResponseDTO<CommentDTO>> getCommentById(@PathVariable(value = "commentId") Long commentId) {
         CommentDTO commentDTO = commentService.getCommentById(commentId);
+
         return ResponseEntity.ok(
                 ResponseDTO.<CommentDTO>builder()
                         .content(commentDTO)

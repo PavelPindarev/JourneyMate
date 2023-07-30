@@ -44,9 +44,8 @@ public class RouteEntity extends BaseEntity {
     @ManyToOne(optional = false)
     private UserEntity author;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ReactionEntity> reactions;
-
 
 
 }
