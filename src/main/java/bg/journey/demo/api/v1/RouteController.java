@@ -195,6 +195,7 @@ public class RouteController {
 
                 );
     }
+
     @PreAuthorize("hasRole('ROLE_ADMIN') OR @securityExpressionUtility.isRouteOwner(#routeId, principal)")
     @DeleteMapping(value = "/{routeId}")
     public ResponseEntity<ResponseDTO<Object>> deleteARoute(@PathVariable(value = "routeId") Long routeId,

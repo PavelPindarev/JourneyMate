@@ -95,8 +95,8 @@ public class UserController {
 
     @PostMapping(value = "/profile-picture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseDTO<Object>> setUserProfilePicture(@AuthenticationPrincipal UserPrincipal userPrincipal,
-                                                                   @RequestParam(required = false) String title,
-                                                                   @RequestPart MultipartFile file) {
+                                                                     @RequestParam(required = false) String title,
+                                                                     @RequestPart MultipartFile file) {
         userService.setProfilePicture(userPrincipal, PictureUploadPayloadDTO
                 .builder()
                 .multipartFile(file)
@@ -131,7 +131,6 @@ public class UserController {
 
                 );
     }
-
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/user/{userId}/ban")
