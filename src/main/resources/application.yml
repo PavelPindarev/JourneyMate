@@ -1,12 +1,12 @@
 app:
-  jwtSecret: "your-jwt-secret"
+  jwtSecret: ${JWT_SECRET_KEY}
   jwtExpirationMs: 600000
   dataLoader: true
 
 cloudinary:
-  apiKey: "your-cloud-key"
-  apiSecret: "your-cloud-secret"
-  cloudName: "your-cloud-name"
+  apiKey: 161796194748837
+  apiSecret: ${CLOUDINARY_SECRET}
+  cloudName: dbqnzurkj
 
 server:
   port: 8080
@@ -14,9 +14,9 @@ server:
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
-    password: "password"
-    url: "jdbc:postgresql://localhost:5432/journeymate"
-    username: "postgres"
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
+    username: ${DB_USER}
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -30,3 +30,9 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+spring-doc:
+  packagesToScan: bg.journey.demo.api.v1
+  pathsToMatch: /api/v1/**
+  swagger-ui:
+    operationsSorter: method
+    tagsSorter: alpha
