@@ -12,3 +12,6 @@
  <li>Cloudinary (for storing images)</li>
  <li>Swagger-UI (GUI for REST API documentation)</li>
 </ul>
+
+<h2>ER diagram:</h2>
+<img src="./readme-images/journeymate_er.png" alt="Society ER diagram">
