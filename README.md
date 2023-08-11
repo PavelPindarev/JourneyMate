@@ -1,6 +1,6 @@
 ﻿<h2>JourneyMate</h2>
-<h2>Brief desciption</h2>
- <p>This project is application for finding routes and destionations and rate it.</p>
+<h2>Brief description</h2>
+ <p>This project is application for finding routes and destinations and rate it.</p>
  <p>The backend service is with monolith architecture. It is a REST API and its using JWT tokens to authorize users.</p>
  
  <h2>Tech Stack:</h2>
