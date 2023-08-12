@@ -39,6 +39,8 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_URL=${DB_URL}
       - CLOUDINARY_SECRET=${CLOUDINARY_SECRET}
+      - CLOUDINARY_KEY=${CLOUDINARY_KEY}
+      - CLOUDINARY_NAME=${CLOUDINARY_NAME}
     #      - SPRING_PROFILES_ACTIVE=docker
     ports:
       - "8080:8080"

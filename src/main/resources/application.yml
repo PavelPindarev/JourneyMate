@@ -4,9 +4,9 @@ app:
   dataLoader: true
 
 cloudinary:
-  apiKey: 161796194748837
+  apiKey: ${CLOUDINARY_KEY}
   apiSecret: ${CLOUDINARY_SECRET}
-  cloudName: dbqnzurkj
+  cloudName: ${CLOUDINARY_NAME}
 
 server:
   port: 8080
