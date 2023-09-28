@@ -1,8 +1,14 @@
 HELP.md
-target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+/monolith/target/classes
+/monolith/target/generated-sources
+/monolith/target/generated-test-sources
+/monolith/target/maven-archiver
+/monolith/target/maven-status
+/monolith/target/surefire-reports
+/monolith/target/test-classes
 
 ### STS ###
 .apt_generated
@@ -31,3 +37,4 @@ build/
 
 ### VS Code ###
 .vscode/
+.env
