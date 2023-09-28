@@ -30,11 +30,11 @@ Example of Cloudinary:
 4.1 Test by Postman for example or something else
 4.2 Use urls from API documentation
 4.3 When you send login request, add Authorization in the request via Postman
-    type: Bearer Token; Tokem: insert the JWT_SECRET_KEY from .env file
-5.1 When you are logged just copy the accessToken from the response of request.
+    type: Bearer Token; Token: insert the JWT_SECRET_KEY from .env file
+5.1 When you are logged, just copy the accessToken from the response of request.
 5.2 Use the accessToken, as you used JWT_SECRET_KEY from .env file,
-    for every new request just add it to Authorization body of request.
-6.1 And before every request first see in the controllers what JSON body,
+    for every new request, just add it to Authorization body of request.
+6.1 And before every request, first see in the controllers what JSON body,
     they expect. 
 7.1 Have fun!
 
