@@ -8,7 +8,7 @@
  <li>Java</li>
  <li>Spring Boot</li>
  <li>JUnit</li>
- <li>PostgresSQL</li>
+ <li>PostgreSQL</li>
  <li>Docker</li>
  <li>Cloudinary (for storing images)</li>
  <li>Swagger-UI (GUI for REST API documentation)</li>
